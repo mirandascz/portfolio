@@ -1,0 +1,19 @@
+.recipes {
+    padding: 60px 40px;
+  }
+  
+  .recipes h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  
+  .recipe-item img {
+    width: 100%;
+    height: auto;
+  }

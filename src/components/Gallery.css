@@ -1,0 +1,487 @@
+/* ========================= */
+/* LAYOUT GENERAL */
+/* ========================= */
+
+.gallery-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  padding: 32px;
+  margin: 20px 0;
+}
+
+/* 👇 FILTROS ocupan toda la fila */
+.filters {
+  grid-column: 1 / -1;
+
+  position: relative;
+  top: 20px;
+  z-index: 10;
+}
+
+/* IZQUIERDA */
+.gallery-left {
+  overflow-y: auto;
+}
+
+/* DERECHA */
+.gallery-right {
+  position: sticky;
+  top: 40px;
+  height: fit-content;
+  max-width: 500px;
+}
+
+/* TEXTO */
+.curatorial h2 {
+  font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 1.5rem 0 0.5rem 0;
+}
+
+.curatorial p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+  text-transform: none;
+}
+
+/* ========================= */
+/* TEXTO COLAPSADO (PRO) */
+/* ========================= */
+
+.text-wrapper {
+  position: relative;
+  overflow: hidden;
+  max-height: 320px;
+  transition: max-height 0.4s ease;
+}
+
+.text-wrapper.expanded {
+  max-height: 999px;
+}
+
+/* fade visual */
+.text-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+
+  background: linear-gradient(
+  to bottom,
+  rgba(255,255,255,0) 0%,
+  var(--bg-color, #fff) 100%
+);
+
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.text-wrapper.expanded::after {
+  opacity: 0;
+}
+
+/* botón leer más */
+.read-more {
+  margin-top: 12px;
+
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+
+  color: rgba(0,0,0,0.6);
+  cursor: pointer;
+
+  position: relative;
+}
+
+/* línea sutil */
+.read-more::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+
+  width: 100%;
+  height: 1px;
+  background: rgba(0,0,0,0.3);
+
+  transform: scaleX(0.4);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .read-more:hover::after {
+    transform: scaleX(1);
+  }
+
+  .read-more:hover {
+    color: rgba(0,0,0,0.9);
+  }
+}
+
+/* ========================= */
+/* DESKTOP */
+/* ========================= */
+
+.filters-desktop {
+  display: flex;
+  gap: 24px;
+}
+
+.filters-desktop button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+  text-transform: lowercase;
+}
+
+.filters-desktop button:hover {
+  opacity: 1;
+}
+
+/* pincel desktop */
+.filters-desktop button::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  bottom: 2px;
+
+  width: 0%;
+  height: 10px;
+
+  background: rgba(0,0,0,0.12);
+  border-radius: 20px 8px 16px 6px;
+  transform: rotate(-1deg);
+
+  z-index: -1;
+  transition: width 0.3s ease;
+}
+
+/* hover solo en desktop real */
+@media (hover: hover) {
+  .filters-desktop button:hover::after {
+    width: 110%;
+  }
+}
+
+/* activo */
+.filters-desktop button.active {
+  opacity: 1;
+  font-weight: 500;
+}
+
+.filters-desktop button.active::after {
+  width: 110%;
+}
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+.filter-toggle {
+  display: none;
+
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 999px;
+
+  padding: 6px 14px;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.filter-toggle:hover {
+  background: rgba(255,255,255,0.85);
+}
+
+/* ======== */
+/* DROPDOWN */
+/* ======== */
+
+.filter-dropdown {
+  position: absolute;
+  top: 44px;
+  left: 0;
+
+  min-width: 160px;
+
+  background: rgba(40, 40, 40, 0.75);
+  backdrop-filter: blur(14px);
+
+  border-radius: 16px;
+  padding: 12px 14px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+
+  animation: fadeIn 0.2s ease;
+}
+
+.filter-dropdown button {
+  background: none;
+  border: none;
+
+  display: inline-block;
+  width: fit-content;
+
+  text-align: left;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.75);
+
+  position: relative;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: lowercase;
+}
+
+.filter-dropdown button::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  bottom: 2px;
+
+  width: 0%;
+  height: 10px;
+
+  background: rgba(255,255,255,0.18);
+  border-radius: 20px 8px 16px 6px;
+  transform: rotate(-1deg);
+
+  z-index: -1;
+  transition: width 0.3s ease;
+}
+
+@media (hover: hover) {
+  .filter-dropdown button:hover {
+    color: white;
+  }
+
+  .filter-dropdown button:hover::after {
+    width: 110%;
+  }
+}
+
+@media (hover: none) {
+  .filter-dropdown button:hover::after {
+    width: 0%;
+  }
+}
+
+.filter-dropdown button.active {
+  color: white;
+  font-weight: 500;
+}
+
+.filter-dropdown button.active::after {
+  width: 110%;
+  background: rgba(255,255,255,0.3);
+}
+
+/* ========================= */
+/* GALERÍA */
+/* ========================= */
+
+.gallery {
+  column-count: 2;
+  column-gap: 14px;
+}
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+}
+
+/* ========================= */
+/* LIGHTBOX */
+/* ========================= */
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+/* estado zoom */
+.lightbox img.zoomed {
+  transform: scale(1.8);
+  cursor: zoom-out;
+}
+
+/* ========================= */
+/* ANIMACIÓN */
+/* ========================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media (max-width: 900px) {
+
+  .gallery-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .filters {
+    order: 1;
+  }
+
+  .gallery-right {
+    position: relative;
+    top: auto;
+    order: 2;
+  }
+
+  .gallery-left {
+    order: 3;
+  }
+
+  .gallery {
+    column-count: 1;
+  }
+
+  .filters-desktop {
+    display: none;
+  }
+
+  .filter-toggle {
+    display: inline-block;
+  }
+}
+
+
+
+/* 👇 DESKTOP: desactiva colapso */
+@media (min-width: 901px) {
+  .text-wrapper {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .text-wrapper::after {
+    display: none;
+  }
+
+  .read-more {
+    display: none;
+  }
+}
+
+/* animación tipo museo */
+.gallery-item {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== LOAD MORE (estética editorial) ===== */
+
+.load-more {
+  margin: 40px auto 20px;
+  display: block;
+
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+
+  color: rgba(0,0,0,0.6);
+  cursor: pointer;
+
+  position: relative;
+}
+
+/* subrayado sutil tipo el resto de tu UI */
+.load-more::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+
+  width: 100%;
+  height: 1px;
+  background: rgba(0,0,0,0.3);
+
+  transform: scaleX(0.4);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .load-more:hover {
+    color: rgba(0,0,0,0.9);
+  }
+
+  .load-more:hover::after {
+    transform: scaleX(1);
+  }
+}

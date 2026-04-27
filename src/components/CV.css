@@ -1,0 +1,92 @@
+.cv-section {
+    padding: 160px 40px;
+    background: #9a9ab3;
+    position: relative;
+  }
+  
+  /* textura muy sutil tipo papel */
+  .cv-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      rgba(0, 0, 0, 0.03) 1px,
+      transparent 1px
+    );
+    background-size: 6px 6px;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  
+  .cv-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  
+  /* TÍTULO */
+  .cv-section h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 2.8rem;
+    font-weight: 500;
+    margin-bottom: 60px;
+    
+  }
+  
+  /* intro */
+  .cv-intro {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    opacity: 0.75;
+    margin-bottom: 80px;
+  }
+  
+  /* bloques */
+  .cv-block {
+    margin-bottom: 60px;
+  }
+  
+  /* subtítulos */
+  .cv-block h3 {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-bottom: 20px;
+  }
+  
+  /* items */
+  .cv-block p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 18px;
+  }
+  
+  /* guión más fino y alineado */
+  .cv-block p::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    opacity: 0.4;
+  }
+  
+  /* espacio extra entre grupos */
+  .cv-block p + p {
+    margin-top: 6px;
+  }
+  
+  /* mobile */
+  @media (max-width: 768px) {
+    .cv-section {
+      padding: 100px 20px;
+    }
+  
+    .cv-section h2 {
+      font-size: 2rem;
+    }
+  
+    .cv-intro {
+      font-size: 1rem;
+    }
+  }
