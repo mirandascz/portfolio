@@ -204,6 +204,7 @@
 
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: 999px;
+  color: #000000;
 
   padding: 6px 14px;
   cursor: pointer;
@@ -241,6 +242,8 @@
   box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 
   animation: fadeIn 0.2s ease;
+
+  font-size: 1rem;
 }
 
 .filter-dropdown button {

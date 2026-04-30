@@ -26,15 +26,15 @@ export default function Gallery() {
       text: "La obra aborda el duelo desde la perspectiva femenina como una escena íntima y silenciosa. La serie está compuesta por tres dibujos realizados con tizas pastel sobre lienzo y reflexiona sobre pérdidas visibles e invisibles: la ausencia de un ser querido, el fin de una relación y las transformaciones que implica el paso de una etapa a otra.\n\nEl duelo se presenta como un estado interno y persistente, que deja huellas en la memoria y en el cuerpo. La paleta limitada, con predominio de tonos fríos sobre los cálidos, y la atmósfera densa refuerzan una sensación de suspensión. La luz y el alto contraste generan puntos de tensión que concentran la carga emocional de las escenas."},
     tarot: {
       title: "Tarot de galgos",
-      text: "La serie Tarot de galgos propone una reinterpretación del tarot clásico..."
+      text: "Esta serie reinterpreta los arcanos del tarot a través de la figura del galgo. Cada carta traslada sus símbolos clásicos a escenas donde el impulso, la sensibilidad y el movimiento del animal construyen nuevos significados. \n\n Está en proceso y se realizó en acuarela sobre papel de algodón."
     },
     recetas: {
       title: "Recetas",
-      text: "Serie que cruza cocina e imagen..."
+      text: "Esta serie está hecha en acuarela sobre papel de algodón y toma la cocina como punto de partida para crear imágenes sensibles a partir de lo cotidiano. Es una suerte de recompilación de las recetas características de mi familia para poder atesorarlas de manera analógica."
     },
     laminas: {
       title: "Láminas",
-      text: "Selección de obras pensadas como piezas reproducibles..."
+      text: "Selección de láminas hechas con acuarelas en formato póster inspiradas en el estilo tradicional de diccionarios ilustrados."
     }
   };
 
