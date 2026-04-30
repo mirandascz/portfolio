@@ -512,8 +512,8 @@
 
 .lightbox-close {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 30px;
+  left: 34px;
 
   font-size: 2rem;
   line-height: 1;
@@ -529,9 +529,9 @@
 
 @media (max-width: 900px) {
     .lightbox-close {
-      top: 10px;
-      left: 10px;
-      font-size: 1rem;
+      top: 20px;
+      left: 24px;
+      font-size: 1.5rem;
     }
 }
 
