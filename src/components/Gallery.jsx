@@ -113,6 +113,19 @@ export default function Gallery() {
     setZoomed(false);
   };
 
+  // bloquear el fondo cuando se abre lightbox
+  useEffect(() => {
+  if (selectedArtwork) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [selectedArtwork]);
+
   return (
     <section id="galeria" className="gallery-layout">
 
@@ -219,7 +232,17 @@ export default function Gallery() {
               if (diff < -50) prev();
             }}
           >
-            
+
+            <button
+              className="lightbox-close"
+              onClick={() => {
+                setSelectedArtwork(null);
+                setZoomed(false);
+                setCurrentImageIndex(0);
+              }}
+            >
+              x
+            </button>
 
             <img
               src={currentImage}
