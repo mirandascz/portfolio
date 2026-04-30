@@ -13,7 +13,6 @@
 /* 👇 FILTROS ocupan toda la fila */
 .filters {
   grid-column: 1 / -1;
-
   position: relative;
   top: 20px;
   z-index: 10;
@@ -147,6 +146,7 @@
   letter-spacing: 0.05em;
   opacity: 0.7;
   text-transform: lowercase;
+  color: #000000;
 }
 
 .filters-desktop button:hover {

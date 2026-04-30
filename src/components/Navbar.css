@@ -78,6 +78,7 @@
 
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(6px);
+  color: #000000;
 
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: 20px;
