@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Gallery.css";
 import artworks from "../data/artworks";
 
@@ -6,23 +6,27 @@ export default function Gallery() {
   const [filter, setFilter] = useState("elduelo");
   const [displayedArtworks, setDisplayedArtworks] = useState([]);
   const [fade, setFade] = useState(true);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedArtwork, setSelectedArtwork] = useState(null);
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [zoomed, setZoomed] = useState(false);
   const [zoomOrigin, setZoomOrigin] = useState("50% 50%");
 
-  // 👇 control curatorial
+  // 👇 NUEVO: index interno (obra + detalles)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // 👇 swipe
+  const touchStartX = useRef(0);
+
   const [visibleCount, setVisibleCount] = useState(5);
 
   const seriesInfo = {
     elduelo: {
       title: "El duelo",
-      text: "Serie de obras en tiza elduelo donde se exploran procesos de duelo desde lo íntimo y lo cotidiano..."
-    },
+      text: "La obra aborda el duelo desde la perspectiva femenina como una escena íntima y silenciosa. La serie está compuesta por tres dibujos realizados con tizas pastel sobre lienzo y reflexiona sobre pérdidas visibles e invisibles: la ausencia de un ser querido, el fin de una relación y las transformaciones que implica el paso de una etapa a otra.\n\nEl duelo se presenta como un estado interno y persistente, que deja huellas en la memoria y en el cuerpo. La paleta limitada, con predominio de tonos fríos sobre los cálidos, y la atmósfera densa refuerzan una sensación de suspensión. La luz y el alto contraste generan puntos de tensión que concentran la carga emocional de las escenas."},
     tarot: {
       title: "Tarot de galgos",
-      text: "La serie Tarot de galgos propone una reinterpretación del tarot clásico desde una mirada animal y contemporánea. Cada arcano es trasladado al universo del galgo, donde los símbolos tradicionales se transforman en elementos cotidianos: objetos, gestos y situaciones propias de su mundo.\n\nA través de técnicas analógicas como la acuarela y el dibujo, la serie explora estados emocionales y simbólicos desde una sensibilidad más intuitiva que narrativa. El galgo aparece como figura central no solo por su carga estética, sino por su condición: un cuerpo frágil, atento, atravesado por el impulso y la tensión.\n\nMás que ilustrar significados, las imágenes buscan abrir lecturas. El tarot funciona aquí como estructura, pero también como excusa para pensar en el vínculo, el instinto, el control y la posibilidad de transformación."
+      text: "La serie Tarot de galgos propone una reinterpretación del tarot clásico..."
     },
     recetas: {
       title: "Recetas",
@@ -80,7 +84,6 @@ export default function Gallery() {
     return () => clearTimeout(timeout);
   }, [filter]);
 
-  // 👇 reset curatorial
   useEffect(() => {
     setExpanded(false);
     setVisibleCount(5);
@@ -88,9 +91,32 @@ export default function Gallery() {
 
   const fullText = seriesInfo[filter].text;
 
+  // 👇 imágenes actuales (obra + detalles)
+  const images = selectedArtwork
+    ? [selectedArtwork.image, ...(selectedArtwork.details || [])]
+    : [];
+
+  const currentImage = images[currentImageIndex];
+
+  // 👇 navegación interna
+  const next = () => {
+    setCurrentImageIndex((i) =>
+      i === images.length - 1 ? 0 : i + 1
+    );
+    setZoomed(false);
+  };
+
+  const prev = () => {
+    setCurrentImageIndex((i) =>
+      i === 0 ? images.length - 1 : i - 1
+    );
+    setZoomed(false);
+  };
+
   return (
     <section id="galeria" className="gallery-layout">
 
+      {/* FILTROS (intacto) */}
       <div className="filters">
         <button
           onClick={() => setOpen(!open)}
@@ -116,6 +142,7 @@ export default function Gallery() {
         </div>
       </div>
 
+      {/* GALERÍA */}
       <div className="gallery-left">
         <div className={`gallery ${fade ? "fade-in" : "fade-out"}`}>
           {displayedArtworks.slice(0, visibleCount).map((art, index) => (
@@ -123,9 +150,10 @@ export default function Gallery() {
               className="gallery-item"
               key={index}
               onClick={() => {
-  setSelectedImage(art.image);
-  setZoomed(false);
-}}
+                setSelectedArtwork(art);
+                setCurrentImageIndex(0); // 👈 arranca en obra principal
+                setZoomed(false);
+              }}
             >
               <img 
                 src={art.image} 
@@ -136,7 +164,6 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* 👇 BOTÓN CURATORIAL */}
         {visibleCount < displayedArtworks.length && (
           <button
             className="load-more"
@@ -147,6 +174,7 @@ export default function Gallery() {
         )}
       </div>
 
+      {/* TEXTO */}
       <div className="gallery-right">
         <div className="curatorial">
           <h2>{seriesInfo[filter].title}</h2>
@@ -166,31 +194,79 @@ export default function Gallery() {
         </div>
       </div>
 
-      {selectedImage && (
+      {/* LIGHTBOX */}
+      {selectedArtwork && (
         <div
           className="lightbox"
           onClick={() => {
-            setSelectedImage(null);
+            setSelectedArtwork(null);
             setZoomed(false);
+            setCurrentImageIndex(0);
           }}
         >
-          <img
-            src={selectedImage}
-            alt="Obra ampliada"
-            onClick={(e) => {
-              e.stopPropagation();
+          <div
+            className="lightbox-content"
+            onClick={(e) => e.stopPropagation()}
 
-              const rect = e.target.getBoundingClientRect();
-
-              const x = ((e.clientX - rect.left) / rect.width) * 100;
-              const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-              setZoomOrigin(`${x}% ${y}%`);
-              setZoomed((z) => !z);
+            onTouchStart={(e) => {
+              touchStartX.current = e.touches[0].clientX;
             }}
-            className={zoomed ? "zoomed" : ""}
-            style={{ transformOrigin: zoomOrigin }}
-          />
+
+            onTouchEnd={(e) => {
+              const diff = touchStartX.current - e.changedTouches[0].clientX;
+
+              if (diff > 50) next();
+              if (diff < -50) prev();
+            }}
+          >
+            
+
+            <img
+              src={currentImage}
+              alt={selectedArtwork.title}
+              onClick={(e) => {
+                const rect = e.target.getBoundingClientRect();
+
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+                setZoomOrigin(`${x}% ${y}%`);
+                setZoomed((z) => !z);
+              }}
+              className={zoomed ? "zoomed" : ""}
+              style={{ transformOrigin: zoomOrigin }}
+            />
+
+            {/* FILM STRIP */}
+{images.length > 1 && (
+  <div className="film-strip">
+    {images.map((img, i) => (
+      <img
+        key={i}
+        src={img}
+        className={i === currentImageIndex ? "active" : ""}
+        onClick={() => {
+          setCurrentImageIndex(i);
+          setZoomed(false);
+        }}
+      />
+    ))}
+  </div>
+)}
+
+            {/* CAPTION */}
+            <div className="lightbox-caption">
+              <h3>{selectedArtwork.title}</h3>
+
+              {(selectedArtwork.medium || selectedArtwork.size || selectedArtwork.year) && (
+                <p>
+                  {selectedArtwork.medium && `${selectedArtwork.medium}`}
+                  {selectedArtwork.size && ` · ${selectedArtwork.size}`}
+                  {selectedArtwork.year && ` · ${selectedArtwork.year}`}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </section>

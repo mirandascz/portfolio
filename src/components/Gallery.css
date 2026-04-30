@@ -4,7 +4,7 @@
 
 .gallery-layout {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 3fr 1fr;
   gap: 32px;
   padding: 32px;
   margin: 20px 0;
@@ -37,7 +37,7 @@
   font-family: "Playfair Display", serif;
     font-size: 2rem;
     font-weight: 500;
-    margin: 1.5rem 0 0.5rem 0;
+    margin:0 0 0.5rem 0;
 }
 
 .curatorial p {
@@ -209,6 +209,8 @@
   cursor: pointer;
 
   transition: all 0.25s ease;
+
+  margin-bottom: 20px;
 }
 
 .filter-toggle:hover {
@@ -340,12 +342,6 @@
   z-index: 9999;
 }
 
-.lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-  transition: transform 0.3s ease;
-  cursor: zoom-in;
-}
 
 /* estado zoom */
 .lightbox img.zoomed {
@@ -389,6 +385,7 @@
     position: relative;
     top: auto;
     order: 2;
+    max-width: none;
   }
 
   .gallery-left {
@@ -484,4 +481,87 @@
   .load-more:hover::after {
     transform: scaleX(1);
   }
+}
+
+/* CONTENEDOR */
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 1200px;
+
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 70vh; 
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+/* CAPTION */
+.lightbox-caption {
+  margin-top: 10px;
+  text-align: center;
+  color: rgba(255,255,255,0.85);
+  text-transform: none;
+}
+
+/* TÍTULO */
+.lightbox-caption h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+  margin: 0;
+}
+
+/* INFO */
+.lightbox-caption p {
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  opacity: 0.8;
+  margin: 5px 0;
+}
+
+
+/* FILM STRIP  */
+.film-strip {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.film-strip img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+
+  opacity: 0.5;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.film-strip img.active {
+  opacity: 1;
+  outline: 2px solid white;
+}
+
+.film-strip img:hover {
+  opacity: 0.9;
 }

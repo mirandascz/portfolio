@@ -5,6 +5,7 @@
   right: 5%;
   z-index: 10;
   transform: translateY(-50%);
+  text-transform: lowercase;
 }
 
 .nav-list {

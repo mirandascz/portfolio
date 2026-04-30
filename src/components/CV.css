@@ -2,6 +2,7 @@
     padding: 160px 40px;
     background: #9a9ab3;
     position: relative;
+    text-transform: none;
   }
   
   /* textura muy sutil tipo papel */
@@ -34,9 +35,7 @@
   
   /* intro */
   .cv-intro {
-    font-size: 1.2rem;
     line-height: 1.7;
-    opacity: 0.75;
     margin-bottom: 80px;
   }
   
@@ -47,7 +46,6 @@
   
   /* subtítulos */
   .cv-block h3 {
-    font-size: 0.9rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     opacity: 0.4;
@@ -56,11 +54,13 @@
   
   /* items */
   .cv-block p {
-    font-size: 1.05rem;
     line-height: 1.8;
     margin-bottom: 8px;
     position: relative;
     padding-left: 18px;
+  }
+  .cv-block:nth-last-of-type(1){
+    margin-bottom: 0;
   }
   
   /* guión más fino y alineado */
